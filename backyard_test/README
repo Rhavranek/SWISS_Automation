@@ -1,0 +1,20 @@
+This code is based off of the code online called SWISS_AUTOMATION_WITH_DATA_LOGGER
+
+This code is being written to try and test the power on all the parts and try and figure out
+what is causing the valco communication problems (& maybe power problems)
+
+I'm going to set up this code so it goes off every hour, and goes through the sample protocol every 5 Hours
+--> Takes 25 hours to run in total
+
+*later iteration should check the rtc.setAlarm2(0 . 14) sets off at 2 pm
+
+What I want to change probably:
+1. A better way to time the sampling protocol (not just delay)
+2. The sampleday counter -> depends on not losing any power
+
+
+
+Notes:
+1. The SMC valves are active LOW. Initialize as HIGH, and they open on LOW
+2. On Sample75 function added a probebypass line
+3. Changed the alarm time so that it sets off at 14 hours rather than 14 minutes.

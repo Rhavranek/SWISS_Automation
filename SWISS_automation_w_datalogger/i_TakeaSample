@@ -1,0 +1,53 @@
+// There are 15 possible flasks on ports 2 - 16, so this should only run until the valco valve has reached port 16. 
+
+void TakeaSample (void) {
+int SampleStep = 1;  
+
+  if ( FlaskNumber < 17){
+    Serial.println("It's time to take a sample!");
+    relayON();
+    delay(10000); // pause 10 seconds to let the Valco Valve turn on
+    ++ SampleStep;
+  }
+
+  if (SampleStep == 2) {
+    Serial.println("Sample Step = 2");
+    valcoHM (); //Make sure the Valco is on position #1 to be able to flush
+    delay(5000); // pause 5 seconds to let the valco turn to position 1
+    ++ SampleStep;
+  }
+
+  if (SampleStep == 3) {
+    Serial.println("Sample Step = 3");
+    Serial.println("Flush the lines");
+    delay(900000); //delay for 15 minutes to flush the lines
+    ++ SampleStep;
+  }
+
+  if (SampleStep == 4) {
+    Serial.println("Sample Step = 4");
+    valcoDOWN();
+    Serial1.println (FlaskNumber); // moves the actuator to the next sampling location (relies on arduino not losing memory)
+    Serial.print("Valco goes to");
+    Serial.println (FlaskNumber);
+    delay(2700000); // delay 45 minutes --> switch to milis??? so that I'm not just hogging the whole arduino 
+    ++ FlaskNumber;
+    ++ SampleStep;
+  }
+
+  if (SampleStep == 5){
+    Serial.println("Sample Step = 5");
+    valcoHM();
+    delay(5000); 
+    relayOFF();
+    ++ SampleStep;
+  }
+
+  if (SampleStep == 6){
+  Serial.println("Sample Step = 6");
+  // recordData; //don't know how to do this yet
+  int SampleStep = 1;
+  rtc.setAlarm2(14,0); // 
+  }
+
+}
